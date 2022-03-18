@@ -1,14 +1,26 @@
 <!--
   {{name}} interpolation
   Property Binding
-  shortarland of name="{{name}}" is [name]=""
+  name="{{name}}" is equat with [name]=""
+  @Output clickHello using at hello component is bind like event
 -->
 <hello name="{{ name }}" (clickHello)="clickHello($event)"></hello>
-<form action="">
+<!-- 
+  Template variables help you use data from one part of a template in another part of the template. Use template variables to perform tasks such as respond to user input or finely tune your application's forms.
+  A template variable can refer to the following:
+  a DOM element within a template,a directive,an element,TemplateRef,a web component
+  (#ref,#customform, #whateveryouwant)
+-->
+<form #customform="ngForm" (ngSubmit)="onSubmit(customform)" novalidate>
   <!-- ngModel is One of Attribute Directives -->
-  <!-- [(ngModel)] use for two way binding -->
-  <input type="text" #ref />
-  <!-- TemplateRef -->
+  <!-- [(ngModel)] use for two way binding, bind with class property-->
+  <input type="text" [(ngModel)]="name" #ref name="version" />
+  <br />
+  <!-- Two Way Binding with Form Value-->
+  <input type="text" name="appname" #ref ngModel />
+  {{ customform.value.appname }}
+  <br />
+  <button type="submit">Submit</button>
   {{ ref.value }}
 </form>
 
@@ -35,3 +47,4 @@
 <div *ngFor="let l of loop" style.background="blue">
   <div *ngIf="l != 3">loop {{ l }}</div>
 </div>
+<!-- What is Structure Directive and Attribute Attribute-->
