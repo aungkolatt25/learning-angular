@@ -4,7 +4,7 @@
   name="{{name}}" is equat with [name]=""
   @Output clickHello using at hello component is bind like event
 -->
-<hello name="{{ name }}" (clickHello)="clickHello($event)"></hello>
+<hello name="{{ name }}" (clickHello)="nothingFromChild($event)"></hello>
 <!-- 
   Template variables help you use data from one part of a template in another part of the template. Use template variables to perform tasks such as respond to user input or finely tune your application's forms.
   A template variable can refer to the following:
@@ -14,20 +14,25 @@
 <form #customform="ngForm" (ngSubmit)="onSubmit(customform)" novalidate>
   <!-- ngModel is One of Attribute Directives -->
   <!-- [(ngModel)] use for two way binding, bind with class property-->
-  <input type="text" [(ngModel)]="name" #ref name="version" />
+  <input type="text" [(ngModel)]="name" #ref name="version" />{{ ref.value }}
   <br />
   <!-- Two Way Binding with Form Value-->
-  <input type="text" name="appname" #ref ngModel />
+  <input type="text" name="appname" ngModel />
   {{ customform.value.appname }}
   <br />
+  <select name="country" id="" *ngIf="countries.length > 0">
+    <option *ngFor="let country of countries" value="">
+      {{ country.name }}
+    </option>
+  </select>
+  <br />
   <button type="submit">Submit</button>
-  {{ ref.value }}
 </form>
 
 <!-- Class Binding [ngClass] or [class]-->
 <!-- [(ngModel)] and [ngClass] are Attribute Directives -->
 <!-- without [], Angular will treat the right hand side as string -->
-<p class="" ngClass="name" style="" (click)="showMessage($event)">Magic</p>
+<p class="" [ngClass]="name" style="" (click)="showMessage($event)">Magic</p>
 
 <!-- 
   Why![colspan] is error?
@@ -38,7 +43,7 @@
   <tr>
     <!-- <td [colSpan]="name"></td> -->
     <!-- Attribute Binding And Style Binding-->
-    <td [attr.colspan]="3" [style.display]="name">Some</td>
+    <td [attr.colspan]="3" [style.display]="{name}">Some</td>
   </tr>
 </table>
 

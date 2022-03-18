@@ -1,5 +1,13 @@
-import { Component, ElementRef, VERSION, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Injectable,
+  VERSION,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CountryService } from '../core/services/country.service';
+import { Country } from '../share/models/country.model';
 
 /**
  * A decorator that appears immediately before a class definition, which declares the class to be of the given type, and provides metadata suitable to the type.
@@ -21,8 +29,10 @@ import { FormsModule } from '@angular/forms';
   selector: 'my-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [CountryService],
 })
 export class AppComponent {
+  constructor(private countryService: CountryService) {}
   /**
    * A decorator statement immediately before a field in a class definition that declares the type of that field.
    * Some examples are @Input and @Output
@@ -37,6 +47,7 @@ export class AppComponent {
 
   name = 'Angular ' + VERSION.major;
   loop = [1, 2, 3];
+  countries: Country[] = [];
 
   showMessage($event) {
     console.log($event);
@@ -44,11 +55,21 @@ export class AppComponent {
     alert('HELLO');
   }
 
-  clickHello($event) {
+  nothingFromChild($event: String) {
     alert($event);
   }
 
   onSubmit(customform) {
     console.log(customform.value);
+    let obj = this.countryService.getAll();
+    obj.subscribe((data: any) => this.deSerializeToCountrys(data));
+    obj.subscribe((data: any) => alert('alertObser'));
+  }
+
+  deSerializeToCountrys(data: any) {
+    this.countries = [];
+    data.map((country) =>
+      this.countries.push(new Country().deserialize(country))
+    );
   }
 }
