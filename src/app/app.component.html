@@ -1,0 +1,37 @@
+<!--
+  {{name}} interpolation
+  Property Binding
+  shortarland of name="{{name}}" is [name]=""
+-->
+<hello name="{{ name }}" (clickHello)="clickHello($event)"></hello>
+<form action="">
+  <!-- ngModel is One of Attribute Directives -->
+  <!-- [(ngModel)] use for two way binding -->
+  <input type="text" #ref />
+  <!-- TemplateRef -->
+  {{ ref.value }}
+</form>
+
+<!-- Class Binding [ngClass] or [class]-->
+<!-- [(ngModel)] and [ngClass] are Attribute Directives -->
+<!-- without [], Angular will treat the right hand side as string -->
+<p class="" ngClass="name" style="" (click)="showMessage($event)">Magic</p>
+
+<!-- 
+  Why![colspan] is error?
+  colspan is Attribute,
+  colSpan is Property 
+-->
+<table>
+  <tr>
+    <!-- <td [colSpan]="name"></td> -->
+    <!-- Attribute Binding And Style Binding-->
+    <td [attr.colspan]="3" [style.display]="name">Some</td>
+  </tr>
+</table>
+
+<!-- ngFor is One of Structure Directives -->
+<!-- ngIf is One of Structure Directives -->
+<div *ngFor="let l of loop" style.background="blue">
+  <div *ngIf="l != 3">loop {{ l }}</div>
+</div>
